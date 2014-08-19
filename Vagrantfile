@@ -14,4 +14,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.module_path    = "puppet/modules"
     puppet.options        = "--verbose --debug"
   end
+  command = "if [ ! -d ~git/.ssh ] ; then mkdir ~git/.ssh ;install -g git -o git #{File.join('/vagrant/keys', 'authorized_keys')} ~git/.ssh ; git init --bare ~git/demo.git ; chown -R git:git ~git/.ssh ~git/demo.git; fi"
+  config.vm.provision :shell, :inline => command
 end
